@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pokedex RAG Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="grain"></div>
+
+  <main class="page">
+    <header class="hero">
+      <div class="badge">RAG + FAISS + Gemini</div>
+      <h1>Pokedex RAG Assistant</h1>
+      <p>Ask naturally or build a smart query. It understands stats, types, generations, and legendary filters.</p>
+    </header>
+
+    <section class="panel">
+      <form id="chat-form" class="chat-form">
+        <label class="label" for="query">Ask anything about Pokemon</label>
+        <div class="input-row">
+          <input id="query" name="query" type="text" placeholder="e.g. fire type pokemon with HP >= 80" autocomplete="off" />
+          <button type="submit" class="primary-btn">Search</button>
+        </div>
+
+        <div class="smart-filters">
+          <div class="filter-block">
+            <span class="filter-title">Type</span>
+            <div id="type-chips" class="chip-row"></div>
+          </div>
+          <div class="filter-block">
+            <span class="filter-title">Stats Builder</span>
+            <div class="stat-grid">
+              <label>
+                Min HP
+                <input type="number" id="min-hp" min="0" max="255" placeholder="0" />
+              </label>
+              <label>
+                Min Attack
+                <input type="number" id="min-attack" min="0" max="255" placeholder="0" />
+              </label>
+              <label>
+                Min Defense
+                <input type="number" id="min-defense" min="0" max="255" placeholder="0" />
+              </label>
+              <label>
+                Generation
+                <input type="number" id="generation" min="1" max="9" placeholder="Any" />
+              </label>
+            </div>
+          </div>
+          <div class="filter-block">
+            <span class="filter-title">Legendary</span>
+            <div class="toggle-row">
+              <label class="toggle">
+                <input type="checkbox" id="legendary-only" />
+                <span>Only legendary</span>
+              </label>
+              <label class="toggle">
+                <input type="checkbox" id="non-legendary-only" />
+                <span>Only non-legendary</span>
+              </label>
+            </div>
+          </div>
+          <div class="filter-block">
+            <button type="button" id="build-query" class="ghost-btn">Build smart query</button>
+            <span class="helper">This composes a natural query using the fields above.</span>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel results-panel">
+      <div class="results-header">
+        <h2>Results</h2>
+        <div class="meta-pill" id="meta-pill">Waiting for your query</div>
+      </div>
+      <div id="answer" class="answer">Ask a question to get started.</div>
+      <div id="results" class="results-grid"></div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
